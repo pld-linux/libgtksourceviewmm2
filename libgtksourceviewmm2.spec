@@ -7,7 +7,7 @@ Summary(pl.UTF-8):	Wiązania C++ dla GtkSourceView2
 Name:		libgtksourceviewmm2
 Version:	1.9.3
 Release:	1
-License:	LGPL
+License:	LGPL v2+
 Group:		Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/libgtksourceviewmm/1.9/libgtksourceviewmm-%{version}.tar.bz2
 # Source0-md5:	bdd4586b3dbddd00a475d5569a36b391
@@ -89,6 +89,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# conflict with libgtksourceviewmm 0.x
+mv $RPM_BUILD_ROOT%{_libdir}/gtksourceviewmm-1.0/proc $RPM_BUILD_ROOT%{_libdir}/gtksourceviewmm-2.0/proc
+
 %if %{with apidocs}
 rm -rf $RPM_BUILD_ROOT%{_docdir}/libgtksourceviewmm-1.0
 %endif
@@ -103,6 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
 %attr(755,root,root) %{_libdir}/libgtksourceviewmm-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtksourceviewmm-2.0.so.1
 
 %files devel
 %defattr(644,root,root,755)
